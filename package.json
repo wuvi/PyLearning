@@ -9,13 +9,18 @@
     "build": "vite build",
     "preview": "wrangler pages dev dist",
     "deploy": "npm run build && wrangler pages deploy dist --project-name pylearn",
+    "deploy:prod": "npm run deploy:check && npm run build && wrangler pages deploy dist --project-name pylearn",
     "cf-typegen": "wrangler types --env-interface CloudflareBindings",
     "db:create": "wrangler d1 create pylearn-production",
     "db:migrate:local": "wrangler d1 migrations apply pylearn-production --local",
     "db:migrate:prod": "wrangler d1 migrations apply pylearn-production",
     "db:seed": "wrangler d1 execute pylearn-production --local --file=./migrations/seed.sql",
     "start": "npm run build && npm run db:migrate:local && npm run dev:sandbox",
-    "clean-port": "fuser -k 3000/tcp 2>/dev/null || true"
+    "clean-port": "fuser -k 3000/tcp 2>/dev/null || true",
+    "deploy:check": "./scripts/deploy-check.sh",
+    "deploy:setup": "echo 'Setting up Cloudflare deployment...' && npx wrangler d1 create pylearn-production && npx wrangler pages project create pylearn --production-branch main",
+    "git:push": "git add . && git commit -m 'Update: Production deployment ready' && git push origin main",
+    "test:api": "curl -f http://localhost:3000/api/health || echo 'API test failed'"
   },
   "dependencies": {
     "hono": "^4.9.4",
