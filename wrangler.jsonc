@@ -1,0 +1,39 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "pylearn",
+  "main": "src/index.tsx",
+  "compatibility_date": "2024-01-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "pages_build_output_dir": "./dist",
+  
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "pylearn-production",
+      "database_id": "",
+      "migrations_dir": "./migrations"
+    }
+  ],
+  
+  // "kv_namespaces": [
+  //   {
+  //     "binding": "KV_SESSIONS",
+  //     "id": ""
+  //   },
+  //   {
+  //     "binding": "KV_CACHE", 
+  //     "id": ""
+  //   }
+  // ],
+  
+  // "r2_buckets": [
+  //   {
+  //     "binding": "R2_STORAGE",
+  //     "bucket_name": "pylearn-storage"
+  //   }
+  // ],
+  
+  "vars": {
+    "ENVIRONMENT": "development"
+  }
+}

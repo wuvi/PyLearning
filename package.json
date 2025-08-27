@@ -1,0 +1,36 @@
+{
+  "name": "pylearn",
+  "type": "module",
+  "description": "PyLearn - 在线Python编程学习平台",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite",
+    "dev:sandbox": "wrangler pages dev dist --d1=pylearn-production --local --ip 0.0.0.0 --port 3000",
+    "build": "vite build",
+    "preview": "wrangler pages dev dist",
+    "deploy": "npm run build && wrangler pages deploy dist --project-name pylearn",
+    "cf-typegen": "wrangler types --env-interface CloudflareBindings",
+    "db:create": "wrangler d1 create pylearn-production",
+    "db:migrate:local": "wrangler d1 migrations apply pylearn-production --local",
+    "db:migrate:prod": "wrangler d1 migrations apply pylearn-production",
+    "db:seed": "wrangler d1 execute pylearn-production --local --file=./migrations/seed.sql",
+    "start": "npm run build && npm run db:migrate:local && npm run dev:sandbox",
+    "clean-port": "fuser -k 3000/tcp 2>/dev/null || true"
+  },
+  "dependencies": {
+    "hono": "^4.9.4",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "zod": "^3.22.4",
+    "nanoid": "^5.0.4"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250105.0",
+    "@hono/vite-cloudflare-pages": "^0.4.2",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.5",
+    "typescript": "^5.3.3",
+    "vite": "^6.3.5",
+    "wrangler": "^4.4.0"
+  }
+}
